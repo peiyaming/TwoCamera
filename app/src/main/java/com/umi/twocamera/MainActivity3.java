@@ -145,24 +145,12 @@ public class MainActivity3 extends AppCompatActivity implements PermissionInterf
         iv_parent.setOnClickListener(listener);
         texture_preview=findViewById(R.id.texture_preview);
         texture_preview2=findViewById(R.id.texture_preview2);
-
-//        if (texture_preview.isAvailable()) {
-//            openCamera(false,texture_preview.getWidth(), texture_preview.getHeight());
-//        } else {
-            texture_preview.setSurfaceTextureListener(mFrontTextureListener);
-//        }
-//        if (texture_preview2.isAvailable()) {
-//            openCamera(true,texture_preview2.getWidth(), texture_preview2.getHeight());
-//        } else {
-            texture_preview2.setSurfaceTextureListener(mBackTextureListener);
-//        }
-        startBackgroundThread();
     }
     @Override
     public void onResume() {
         super.onResume();
 
-        /*if (texture_preview.isAvailable()) {
+        if (texture_preview.isAvailable()) {
             openCamera(false,texture_preview.getWidth(), texture_preview.getHeight());
         } else {
             texture_preview.setSurfaceTextureListener(mFrontTextureListener);
@@ -172,7 +160,7 @@ public class MainActivity3 extends AppCompatActivity implements PermissionInterf
         } else {
             texture_preview2.setSurfaceTextureListener(mBackTextureListener);
         }
-        startBackgroundThread();*/
+        startBackgroundThread();
     }
     private void startBackgroundThread() {
         mBackgroundThread_front = new HandlerThread("Camera_front");
@@ -388,7 +376,7 @@ public class MainActivity3 extends AppCompatActivity implements PermissionInterf
         }
 
         try {
-            closePreviewSession();
+//            closePreviewSession();
             SurfaceTexture texture = getTexture(isBack).getSurfaceTexture();
             assert texture != null;
             texture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
@@ -409,7 +397,7 @@ public class MainActivity3 extends AppCompatActivity implements PermissionInterf
                                 setUpCaptureRequestBuilder(mPreviewBuilder);
                                 HandlerThread thread = new HandlerThread(threadName);
                                 thread.start();
-                                session.setRepeatingRequest(mPreviewBuilder.build(), null, mHandler);
+                                session.setRepeatingRequest(mPreviewBuilder.build(), null, null);
                             } catch (CameraAccessException e) {
                                 e.printStackTrace();
                             }
@@ -556,6 +544,11 @@ public class MainActivity3 extends AppCompatActivity implements PermissionInterf
     }
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void destroy(){
+        closePreviewSession();
+        if(mCameraDevice!=null){
+            mCameraDevice.close();
+            mCameraDevice=null;
+        }
     }
 /**
      * 创建png图片回调数据对象

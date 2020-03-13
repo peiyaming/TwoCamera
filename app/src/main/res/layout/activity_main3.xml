@@ -13,20 +13,35 @@
         android:layout_height="match_parent"
         android:layout_weight="2"
         android:layout_gravity="center_horizontal">
-        <com.umi.twocamera.view.AutoFitTextureView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <com.umi.twocamera.view.AutoFitTextureView
+                android:id="@+id/texture_preview2"
+                android:layout_width="match_parent"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+            <com.umi.twocamera.view.AutoFitTextureView
+                android:id="@+id/texture_preview"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <!--<com.umi.twocamera.view.AutoFitTextureView
             android:id="@+id/texture_preview2"
             android:layout_width="96dp"
             android:layout_marginLeft="5dp"
             android:layout_gravity="right"
-            android:layout_height="128dp"
-            android:visibility="gone"/>
-        <!--<SurfaceView
+            android:layout_height="128dp"/>
+        &lt;!&ndash;<SurfaceView
             android:id="@+id/surfaceview2"
             android:layout_width="96dp"
             android:layout_marginLeft="5dp"
             android:layout_gravity="right"
             android:layout_height="128dp"
-            android:visibility="gone"/>-->
+            android:visibility="gone"/>&ndash;&gt;
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -35,12 +50,12 @@
                 android:id="@+id/texture_preview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-            <!--<SurfaceView
+            &lt;!&ndash;<SurfaceView
                 android:id="@+id/surfaceview1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />-->
+                android:layout_height="match_parent" />&ndash;&gt;
         </FrameLayout>
-
+-->
         <!--<com.zqzn.android.face.processor.FaceRecBoxView
             android:id="@+id/camera_mask_view"
             android:layout_width="480dp"
