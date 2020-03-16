@@ -142,10 +142,10 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    SurfaceView surfaceview1;
-    SurfaceHolder surfaceholder1;
-    Camera.Parameters parameters;
-    private Camera camera1 = null;
+//    SurfaceView surfaceview1;
+//    SurfaceHolder surfaceholder1;
+//    Camera.Parameters parameters;
+//    private Camera camera1 = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,14 +159,14 @@ public class MainActivity extends AppCompatActivity {
                 capture();
             }
         });*/
-        surfaceview1 = (SurfaceView) findViewById(R.id.surfaceview2);
+        /*surfaceview1 = (SurfaceView) findViewById(R.id.surfaceview2);
         surfaceholder1 = surfaceview1.getHolder();
         surfaceholder1.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        surfaceholder1.addCallback(new surfaceholderCallbackBack());
+        surfaceholder1.addCallback(new surfaceholderCallbackBack());*/
     }
     /**
      * 后置摄像头回调
-     */
+     *//*
     class surfaceholderCallbackBack implements SurfaceHolder.Callback {
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("Came_e", "图像出错");
             }
         }
-    }
+    }*/
     @Override
     protected void onPause() {
         closeCamera();

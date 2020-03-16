@@ -31,6 +31,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Size;
+import android.util.SparseIntArray;
 import android.view.KeyEvent;
 import android.view.Surface;
 import android.view.TextureView;
@@ -125,6 +126,14 @@ public class MainActivity3 extends AppCompatActivity implements PermissionInterf
     private Semaphore mCameraOpenCloseLock = new Semaphore(1);//使用信号量 Semaphore 进行多线程任务调度
     private Semaphore mCameraOpenCloseLock_front = new Semaphore(1);//使用信号量 Semaphore 进行多线程任务调度
 
+    private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
+    static
+    {
+        ORIENTATIONS.append(Surface.ROTATION_0, 90);
+        ORIENTATIONS.append(Surface.ROTATION_90, 0);
+        ORIENTATIONS.append(Surface.ROTATION_180, 270);
+        ORIENTATIONS.append(Surface.ROTATION_270, 180);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -397,7 +406,7 @@ public class MainActivity3 extends AppCompatActivity implements PermissionInterf
                                 setUpCaptureRequestBuilder(mPreviewBuilder);
                                 HandlerThread thread = new HandlerThread(threadName);
                                 thread.start();
-                                session.setRepeatingRequest(mPreviewBuilder.build(), null, null);
+                                session.setRepeatingRequest(mPreviewBuilder.build(), null, mHandler);
                             } catch (CameraAccessException e) {
                                 e.printStackTrace();
                             }
@@ -448,7 +457,7 @@ public class MainActivity3 extends AppCompatActivity implements PermissionInterf
         }
         return sizeMap[0];
     }
-    private void configureTransform(boolean isBack,int viewWidth, int viewHeight) {
+    private void configureTransform(boolean isBack,int viewWidth, int viewHeight){} /*{
         TextureView textureView;
         if(isBack){
             textureView=texture_preview2;
@@ -476,9 +485,15 @@ public class MainActivity3 extends AppCompatActivity implements PermissionInterf
             matrix.postRotate(180, centerX, centerY);
         }
         textureView.setTransform(matrix);
-    }
+    }*/
     private void setUpCaptureRequestBuilder(CaptureRequest.Builder builder) {
         builder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
+        // 获取设备方向
+        int rotation = getWindowManager().getDefaultDisplay().getRotation();
+//        rotation=1;
+        // 根据设备方向计算设置照片的方向
+        builder.set(CaptureRequest.JPEG_ORIENTATION
+                , ORIENTATIONS.get(rotation));
     }
     private void closePreviewSession() {
         if (mPreviewSession != null) {
