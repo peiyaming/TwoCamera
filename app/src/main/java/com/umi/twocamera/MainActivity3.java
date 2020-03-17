@@ -205,11 +205,12 @@ public class MainActivity3 extends AppCompatActivity implements PermissionInterf
             String cameraId;
             if (isBack){
                 cameraId = manager.getCameraIdList()[0];      //0后   1前
-                // Choose the sizes for camera preview and video recording
+                // Choose the sizes for camera preview and 4 recording
                 CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
                 StreamConfigurationMap map = characteristics
                         .get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
                 mSensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
+                LogUtils.i("TAG","mSensorOrientation_back:"+mSensorOrientation);
                 if (map == null) {
                     throw new RuntimeException("Cannot get available preview/video sizes");
                 }
@@ -233,6 +234,7 @@ public class MainActivity3 extends AppCompatActivity implements PermissionInterf
                 StreamConfigurationMap map = characteristics
                         .get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
                 mSensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
+                LogUtils.i("TAG","mSensorOrientation_front:"+mSensorOrientation);
                 if (map == null) {
                     throw new RuntimeException("Cannot get available preview/video sizes");
                 }
@@ -457,7 +459,7 @@ public class MainActivity3 extends AppCompatActivity implements PermissionInterf
         }
         return sizeMap[0];
     }
-    private void configureTransform(boolean isBack,int viewWidth, int viewHeight){} /*{
+    private void configureTransform(boolean isBack,int viewWidth, int viewHeight){
         TextureView textureView;
         if(isBack){
             textureView=texture_preview2;
@@ -484,8 +486,9 @@ public class MainActivity3 extends AppCompatActivity implements PermissionInterf
         } else if (Surface.ROTATION_180 == rotation) {
             matrix.postRotate(180, centerX, centerY);
         }
+        LogUtils.i("TAG","rotation:"+rotation);
         textureView.setTransform(matrix);
-    }*/
+    }
     private void setUpCaptureRequestBuilder(CaptureRequest.Builder builder) {
         builder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
         // 获取设备方向
